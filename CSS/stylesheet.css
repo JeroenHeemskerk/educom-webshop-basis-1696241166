@@ -2,7 +2,8 @@
 
 
 .entirepage{
-    background-color:beige;
+    width: 800px;
+    margin:auto;
 }
 
 .forms{
@@ -14,7 +15,8 @@
 }
 
 .headers{
-    background-color: azure;
+    min-height: 48px;
+    text-align: center;
 }
 
 .footers{
