@@ -1,4 +1,23 @@
 /* Cascade Style Sheet for this website */
-body {
-background-color: brown;
+
+
+.entirepage{
+    background-color:beige;
+}
+
+.forms{
+    background-color: brown;
+}
+
+.menu{
+    background-color: olivedrab;
+}
+
+.headers{
+    background-color: azure;
+}
+
+.footers{
+    background-color: black;
+    color: white;
 }
