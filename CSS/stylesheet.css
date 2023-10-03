@@ -4,14 +4,25 @@
 .entirepage{
     width: 800px;
     margin:auto;
-}
-
-.forms{
-    background-color: brown;
+    font-size: 12px;
+    color:darkgrey;
+    background-color: white;
 }
 
 .menu{
-    background-color: olivedrab;
+    list-style-type: none;
+}
+
+.menu > li{
+    color:blue;
+    border: 1px solid black;
+    display:inline;
+}
+
+.menu > li > a {
+    text-decoration: none;
+    color:white;
+    background-color: blue;
 }
 
 .headers{
@@ -22,4 +33,12 @@
 .footers{
     background-color: black;
     color: white;
+    font-size: 10px;
+    text-align: right;
 }
+
+input[type=text]{
+    width:400px;
+}
+
+
