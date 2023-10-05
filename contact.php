@@ -20,7 +20,7 @@
             }
 
             if (empty($_POST["email"])){
-                $phonenumberErr = "Email is required";
+                $emailErr = "Email is required";
             } else {
                 $email = test_input($_POST["email"]);
             }
@@ -34,10 +34,10 @@
             if (empty($_POST["message"])){
                 $messageErr = "Message is required";
             } else {
-                $message = test_input($_POST["phonenumber"]);
+                $message = test_input($_POST["message"]);
             }
   
-            if (empty($_POST["messageErr"])){
+            if (empty($_POST[""])){
                  $valid = true;
             } else {
                 $valid = false; 
