@@ -13,12 +13,27 @@
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // validate the 'POST' data
-      
-            // ....   
-      
-            $valid = ...
-         }
+            if(empty($_POST["name"])){
+                $nameErr = "Name is required";
+            } else {
+                 $name = test_input($_POST["name"]);
+            }
+           
+            if (empty($_POST["phonenumber"])){
+                $phonenumberErr = "Phonenumber is required";
+            } else {
+                $phonenumber = test_input($_POST["phonenumber"]);
+            }
 
+            if (empty($_POST["message"])){
+                $messageErr = "Message is required";
+            } else {
+                $message = test_input($_POST["phonenumber"]);
+            }
+  
+            $valid = true;
+         }
+         
         ?> 
     <header>
     <h1 class="headers"> Contact page</h1>
@@ -39,23 +54,23 @@
         <?php if (!$valid) { /* Show the next part only when $valid is false */ ?>
 
                 <form method="POST" action="contact.php">;
-                  ...
+                  
                   <input name="email" value="<?php echo $email; ?>" id="email">
                   <span class="error">* <?php echo $emailErr; ?></span>
-                  ...
+                  
                 </form>;
           
               <?php } else { /* Show the next part only when $valid is true */ ?>
           
                <p>Bedankt voor uw reactie:</p> 
-               ...
+               
                <div>Email: <?php echo $email; ?></div>
-               ...     
+               
           
               <?php } /* End of conditional showing */ ?>
 
     <form>
-        <select id="title">
+        <select id="salutation">
             <option value="mr">Dhr.</option>
             <option value="mrs">Mevr.</option> 
         </select> </br></br>
