@@ -70,8 +70,8 @@
             <option value="mrs">Mevr.</option> 
         </select> </br></br>
 
-        <label for="fname">Naam:</label>
-        <input type="text" name="fname" id="fname"></br>
+        <label for="name">Naam:</label>
+        <input type="text" name="name" id="name"></br>
         <span class="error">* <?php echo $nameErr;?></span>
         <br><br>
 
@@ -85,14 +85,14 @@
         <span class="error">* <?php echo $phonenumberErr;?></span>
         <br><br>
         
-        <label for="fav_communication">Communicatievoorkeur:</label>
-        <input type="radio" name="fav_communication" id="communication_email">
+        <label for="comm_preference">Communicatievoorkeur:</label>
+        <input type="radio" name="comm_preference" id="communication_email">
         <label for="email">Email</label>
-        <input type="radio" name="fav_communication" id="communication_phone">
+        <input type="radio" name="comm_preference" id="communication_phone">
         <label for="phone">Telefoon</label></br></br>
 
-        <label for="contact">Contact:</label></br>
-        <textarea name="contact" id="contact" cols="40" rows="5" placeholder="Schrijf hier je bericht"></textarea></br>
+        <label for="message">Contact:</label></br>
+        <textarea name="message" id="contact" cols="40" rows="5" placeholder="Schrijf hier je bericht"></textarea></br>
         <span class="error">* <?php echo $messageErr;?></span>
         <br><br>
 
