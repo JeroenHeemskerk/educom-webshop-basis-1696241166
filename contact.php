@@ -37,7 +37,7 @@
                 $message = test_input($_POST["message"]);
             }
   
-            if (empty($_POST[""])){
+            if (empty($nameErr) && empty($emailErr) && empty($phonenumberErr) && empty($messageErr)){
                  $valid = true;
             } else {
                 $valid = false; 
@@ -104,7 +104,7 @@
           
             <p>Bedankt voor uw reactie:</p> 
                
-             <div>Name: <?php echo $salutation + $name; ?></div>
+             <div>Name: <?php echo $salutation . $name; ?></div>
              <div>Email: <?php echo $email; ?></div>
              <div>Phonenumber: <?php echo $phonenumber; ?></div>
              <div>Communication preference: <?php echo $comm_preference; ?></div>
