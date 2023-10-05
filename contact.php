@@ -31,11 +31,12 @@
                 $phonenumber = test_input($_POST["phonenumber"]);
             }
 
-            if (empty($_POST["message"])){
+            if (empty($_POST["message"])) {
                 $messageErr = "Message is required";
             } else {
                 $message = test_input($_POST["message"]);
             }
+            
   
             if (empty($nameErr) && empty($emailErr) && empty($phonenumberErr) && empty($messageErr)){
                  $valid = true;
@@ -65,18 +66,18 @@
     <?php if (!$valid) { /* Show the next part only when $valid is false */ ?>
 
         <form method="POST" action="contact.php">
-        <select id="salutation">
+        <select name="salutation" id="salutation">
             <option value="mr">Dhr.</option>
             <option value="mrs">Mevr.</option> 
         </select> </br></br>
 
         <label for="name">Naam:</label>
-        <input type="text" name="name" id="name"></br>
+        <input type="text" name="name" id="name" value="<?php echo $name;?>"></br>
         <span class="error">* <?php echo $nameErr;?></span>
         <br><br>
 
         <label for="email">Email:</label>
-        <input type="text" name="email" id="email"></br>
+        <input type="text" name="email" id="email" value="<?php echo $email;?>"></br>
         <span class="error">* <?php echo $emailErr;?></span>
         <br><br>
 
@@ -86,13 +87,13 @@
         <br><br>
         
         <label for="comm_preference">Communicatievoorkeur:</label>
-        <input type="radio" name="comm_preference" id="communication_email">
+        <input type="radio" name="comm_preference" id="communication_email" value="email">
         <label for="email">Email</label>
-        <input type="radio" name="comm_preference" id="communication_phone">
+        <input type="radio" name="comm_preference" id="communication_phone" value="phone">
         <label for="phone">Telefoon</label></br></br>
 
         <label for="message">Contact:</label></br>
-        <textarea name="message" id="contact" cols="40" rows="5" placeholder="Schrijf hier je bericht"></textarea></br>
+        <textarea name="message" id="contact" cols="40" rows="5" placeholder="Schrijf hier je bericht"><?php echo $comment;?></textarea></br>
         <span class="error">* <?php echo $messageErr;?></span>
         <br><br>
 
@@ -100,7 +101,7 @@
         </form></br>
 
           
-        <?php } else { /* Show the next part only when $valid is true */ ?>
+        <?php } else { /* Show the next part only when $valid is true */var_dump($valid); ?>
           
             <p>Bedankt voor uw reactie:</p> 
                
