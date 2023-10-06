@@ -6,45 +6,70 @@
 </head>
 
 <body>
-    <!-- Dit is de gekopieerde php code die in de opdracht staat-->
     <?php
     // initate the variables 
     $salutation = $name = $email = $phonenumber = $comm_preference = $message = '';
     $salutationErr = $nameErr = $emailErr = $phonenumberErr = $comm_preferenceErr = $messageErr = '';
     $valid = false;
 
+    function test_input($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-        // var_dump($_POST);
-        // die();
-
         // validate for the 'POST' data
+        if (empty($_POST["saluation"])) {
+            $salutationErr = "Salutation is required";
+        } else {
+            $salutation = test_input($_POST["salutation"]);
+        }
+
         if (empty($_POST["name"])) {
             $nameErr = "Name is required";
         } else {
-            $name = ($_POST["name"]);
+            $name = test_input($_POST["name"]);
+            // check if name only contains letters and whitespace
+            if (!preg_match("/^[a-zA-Z-' ]*$/", $name)) {
+                $nameErr = "Only letters and white space allowed";
+            }
         }
 
         if (empty($_POST["email"])) {
             $emailErr = "Email is required";
         } else {
-            $email = ($_POST["email"]);
+            $email = test_input($_POST["email"]);
+            // check if e-mail address is well-formed
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $emailErr = "Invalid email format";
+            }
         }
 
         if (empty($_POST["phonenumber"])) {
             $phonenumberErr = "Phonenumber is required";
         } else {
-            $phonenumber = ($_POST["phonenumber"]);
+            $phonenumber = test_input($_POST["phonenumber"]);
+        }
+
+        if (empty($_POST["comm_preference"])) {
+            $comm_preferenceErr = "Communication preference is required";
+        } else {
+            $comm_preference = test_input($_POST["comm_preference"]);
         }
 
         if (empty($_POST["message"])) {
             $messageErr = "Message is required";
         } else {
-            $message = ($_POST["message"]);
+            $message = test_input($_POST["message"]);
         }
 
 
-        if (empty($nameErr) && empty($emailErr) && empty($phonenumberErr) && empty($messageErr)) {
+        if (empty($salutationErr) && empty($nameErr) && empty($emailErr) && empty($phonenumberErr) && empty($comm_preferenceErr) && empty($messageErr)) {
             $valid = true;
         } else {
             $valid = false;
@@ -66,14 +91,13 @@
 
     <section>
 
-        <!-- Dit is de gekopieerde (nu aangepaste) php code die in de opdracht staat-->
-
         <?php if (!$valid) { /* Show the next part only when $valid is false */ ?>
 
-            <form method="POST" action="contact.php">
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                 <select name="salutation" id="salutation">
                     <option value="mr">Dhr.</option>
                     <option value="mrs">Mevr.</option>
+                    <span class="error">* <?php echo $salutationErr; ?></span>
                 </select> </br></br>
 
                 <label for="name">Naam:</label>
@@ -95,7 +119,8 @@
                 <input type="radio" name="comm_preference" id="communication_email" value="email">
                 <label for="email">Email</label>
                 <input type="radio" name="comm_preference" id="communication_phone" value="phone">
-                <label for="phone">Telefoon</label></br></br>
+                <label for="phone">Telefoon</label></br>
+                <span class="error">* <?php echo $comm_preferenceErr; ?></span></br></br>
 
                 <label for="message">Contact:</label></br>
                 <textarea name="message" id="contact" cols="40" rows="5" placeholder="Schrijf hier je bericht"><?php echo $message; ?></textarea></br>
