@@ -5,9 +5,9 @@
     </head>
     <h1 class="headers">About page</h1>
     <ul class="menu">
-        <li><a href="index.html">HOME</a></li>
-        <li><a href="about.html">ABOUT</a></li>
-        <li><a href="contact.html">CONTACT</a></li>
+        <li><a href="home.php">HOME</a></li>
+        <li><a href="about.php">ABOUT</a></li>
+        <li><a href="contact.php">CONTACT</a></li>
     </ul>
     <p>Ik ben Laura, 30 jaar en ik woon samen met mijn vriend en twee katten in Hilversum. Ik ben momenteel bezig met een traineeship Software Development bij Educom.
         <p>Mijn hobby's zijn:
