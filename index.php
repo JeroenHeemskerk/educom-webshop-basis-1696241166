@@ -10,10 +10,7 @@
 // MAIN APP
 // ===================================
 $page = getRequestedPage();
-
-//stap 2
 showResponsePage($page);
-
 
 // ===================================
 // FUNCTIONS
@@ -24,26 +21,49 @@ function getRequestedPage()
     $requestType = $_SERVER['REQUEST_METHOD'];
 
     if ($requestType == "POST"){
-        $requestedPage = getPageFromPost();
+        $requestedPage = getPostVar('page','home');
     } else{
-        $requestedPage = getPageFromGet();
+        $requestedPage = getUrlVar('page', 'home');
     }
     return $requestedPage;
 
 }
 
-function showResponsePage(){
+function showResponsePage($page){
+    beginDocument();
+    showHeadSection();
+    showBodySection($page);
+    endDocument();
+};
+
+function getArrayVar($array, $key, $default='') 
+{ 
+   return isset($array[$key]) ? $array[$key] : $default; 
+} 
+//============================================== 
+
+
+function getPostVar($key, $default="")
+{
+    return getArrayVal($_POST, $key, $default);
+
+    /* Or use the modern variant below, a better way than accessing super global "$_POST"
+  
+       see https://www.php.net/manual/en/function.filter-input.php 
+       for extra options 
+
+       $value = filter_input(INPUT_POST, $key); 
+        
+       return isset($value) ? $value : $default; 
+    */
 
 };
 
-
-function getPageFromPost(){
-
+function getUrlVar($key, $default='')
+{
+    //query parameters//
 };
 
-function getPageFromGet(){
-//query parameters//
-};
 
 
 
@@ -51,20 +71,91 @@ function getPageFromGet(){
 // getPageFromGet
 
 
-
-
-
-
-
-
+//============================================== 
 
 function beginDocument(){
     echo "<!doctype html>
     <html>";
 }
 
+function showHeadSection(){
+    echo "<head>
+    <link rel="stylesheet" href="CSS/stylesheet.css">
+    </head>";
+}
+
+function showBodySection($page){
+    echo '    <body>' . PHP_EOL; 
+    showHeader($page);
+    showMenu(); 
+    showContent($page); 
+    showFooter(); 
+    echo '    </body>' . PHP_EOL; 
+}
+
+function endDocument(){
+    echo  '</html>'; 
+}
+
+//============================================== 
 
 
+//============================================== 
+
+function openBody(){
+
+};
+
+function showHeader($page) 
+{ 
+  // Zelf invullen
+} 
+
+function showMenu() 
+{ 
+  // Zelf invullen
+} 
+
+function showContent($page) 
+{ 
+   switch ($page) 
+   { 
+       case 'home':
+          require('home.php');
+          showHomeContent();
+          break;
+       case 'about':
+          // Zelf invullen   
+   }     
+} 
+
+function showFooter() 
+{ 
+  //  Zelf invullen
+} 
+
+//============================================== 
+
+
+//============================================== 
+
+function showHomeContent(){
+
+}
+
+function showAboutContent(){
+
+}
+
+function showContactContent(){
+
+}
+
+function showPageNotFound(){
+    
+}
+
+//============================================== 
 
 
 // Dit is de nav-bar voor een GET request (met URLparameter):
