@@ -121,8 +121,7 @@ function showContent($page)
             showContactContent();
             break;
         default:
-        // Code voor : page NOT found (404?)
-        // of ik kan hier een functie maken en daar een NOT found page laten genereren 
+            showPageNotFound();
     }
 }
 
@@ -139,20 +138,8 @@ function showFooter()
 
 function showPageNotFound()
 {
+    echo 'Page not found';
 }
-
-//============================================== 
-
-
-// Dit is de nav-bar voor een GET request (met URLparameter):
-
-// <nav>
-//         <ul class="menu">
-//             <li><a href="index.php?page=home">HOME</a></li>
-//             <li><a href="index.php?page=about">ABOUT</a></li>
-//             <li><a href="index.php?page=contact">CONTACT</a></li>
-//         </ul>
-//     </nav>
 
 
 ?>

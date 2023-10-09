@@ -80,15 +80,15 @@
                 $valid = false;
             }
         }
-        return ["salutationErr"=> $salutationErr, "valid"=> $valid];
+        return ["messageErr"=> $messageErr, "phonenumberErr"=> $phonenumberErr, "emailErr" => $emailErr, "nameErr" => $nameErr,"salutationErr"=> $salutationErr, "valid"=> $valid, "name" => $name, "phonenumber"=> $phonenumber, "email"=> $email];
     }
    
     function showContactForm($data) {
            
-           echo '<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+           echo '<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>
                 <select name="salutation" id="salutation">
-                    <option value="mr" <?php if (isset($salutation) && $salutation=="mr") echo "selected";?>>Dhr.</option>
-                    <option value="mrs" <?php if (isset($salutation) && $salutation=="mrs") echo "selected";?>>Mevr.</option>
+                    <option value="mr" <?php if (isset($salutation) && $salutation=="mr") echo "selected";?>Dhr.</option>
+                    <option value="mrs" <?php if (isset($salutation) && $salutation=="mrs") echo "selected";?>Mevr.</option>
                 </select> </br>
                 <span class="error">'; echo $data['salutationErr'] . '</span></br></br>
 
@@ -98,13 +98,13 @@
                 <br><br>
 
                 <label for="email">Email:</label>
-                <input type="text" name="email" id="email" value="<?php echo $email; ?>"></br>
-                <span class="error"> <?php echo $emailErr; ?></span>
+                <input type="text" name="email" id="email" value="'. $data['email'] . '"></br>
+                <span class="error">' . $data['emailErr'] . '</span>
                 <br><br>
 
                 <label for="phonenumber">Telefoonnummer:</label>
-                <input type="text" name="phonenumber" id="phonenumber" value="<?php echo $phonenumber; ?>"></br></br>
-                <span class="error"> <?php echo $phonenumberErr; ?></span>
+                <input type="text" name="phonenumber" id="phonenumber" value="'. $data['phonenumber'] . '"></br></br>
+                <span class="error">' . $data['phonenumberErr'] . '</span>
                 <br><br>
 
                 <label for="comm_preference">Communicatievoorkeur:</label>
@@ -118,8 +118,8 @@
                 <span class="error"> <?php echo $comm_preferenceErr; ?></span></br></br>
 
                 <label for="message">Contact:</label></br>
-                <textarea name="message" id="contact" cols="40" rows="5" placeholder="Schrijf hier je bericht"><?php echo $message; ?></textarea></br>
-                <span class="error"> <?php echo $messageErr; ?></span>
+                <textarea name="message" id="contact" cols="40" rows="5" placeholder="Schrijf hier je bericht">' . $data['messageErr'] . '</textarea></br>
+                <span class="error">' . $data['messageErr'] . '</span>
                 <br><br>
 
                 <button>Verzenden</button>
