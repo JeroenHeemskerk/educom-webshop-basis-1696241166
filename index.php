@@ -1,8 +1,5 @@
 
 <?php
-
-
-
 // Dit heb ik gekopieerd uit de opdracht://
 //stap 1
 
@@ -23,8 +20,10 @@ function getRequestedPage()
     if ($requestType == "POST"){
         $requestedPage = getPostVar('page','home');
     } else{
-        $requestedPage = getUrlVar('page', 'home');
+        $requestedPage = getUrlVar('page','home');
     }
+    var_dump($requestedPage);
+    die;
     return $requestedPage;
 
 }
@@ -36,33 +35,27 @@ function showResponsePage($page){
     endDocument();
 };
 
-function getArrayVar($array, $key, $default='') 
-{ 
-   return isset($array[$key]) ? $array[$key] : $default; 
-} 
-//============================================== 
+// =========================================== 
 
 
 function getPostVar($key, $default="")
 {
-    return getArrayVal($_POST, $key, $default);
-
-    /* Or use the modern variant below, a better way than accessing super global "$_POST"
-  
-       see https://www.php.net/manual/en/function.filter-input.php 
-       for extra options 
-
-       $value = filter_input(INPUT_POST, $key); 
-        
-       return isset($value) ? $value : $default; 
-    */
-
+    return getArrayVar($_POST, $key, $default);
 };
 
 function getUrlVar($key, $default='')
 {
-    //query parameters//
+    return getArrayVar($_GET, $key, $default);
 };
+
+function getArrayVar($array, $key, $default='') 
+{ 
+   return isset($array[$key]) ? $array[$key] : $default; 
+} 
+// ===================================================
+
+
+
 
 
 
@@ -79,9 +72,9 @@ function beginDocument(){
 }
 
 function showHeadSection(){
-    echo "<head>
+    echo '<head>
     <link rel="stylesheet" href="CSS/stylesheet.css">
-    </head>";
+    </head>';
 }
 
 function showBodySection($page){
@@ -152,7 +145,7 @@ function showContactContent(){
 }
 
 function showPageNotFound(){
-    
+
 }
 
 //============================================== 
