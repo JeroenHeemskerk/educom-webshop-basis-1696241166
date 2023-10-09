@@ -1,7 +1,5 @@
 
 <?php
-// Dit heb ik gekopieerd uit de opdracht://
-//stap 1
 
 // ===================================
 // MAIN APP
@@ -50,15 +48,15 @@ function getArrayVar($array, $key, $default = '')
 {
     return isset($array[$key]) ? $array[$key] : $default;
 }
+
 // ===================================================
 
 
-//============================================== 
 
 function beginDocument()
 {
     echo "<!doctype html>
-    <html>";
+    <html class='entirepage'>";
 }
 
 function showHeadSection()
@@ -83,10 +81,10 @@ function endDocument()
     echo  '</html>';
 }
 
+ 
+
 //============================================== 
 
-
-//============================================== 
 
 function showHeader($page)
 {
@@ -117,11 +115,14 @@ function showContent($page)
         case 'about':
             require('about.php');
             showAboutContent();
+            break;
         case 'contact':
             require('contact.php');    
             showContactContent();
+            break;
         default:
         // Code voor : page NOT found (404?)
+        // of ik kan hier een functie maken en daar een NOT found page laten genereren 
     }
 }
 
@@ -132,22 +133,9 @@ function showFooter()
     </footer>';
 }
 
-//============================================== 
-
 
 //============================================== 
 
-function showHomeContent()
-{
-}
-
-function showAboutContent()
-{
-}
-
-function showContactContent()
-{
-}
 
 function showPageNotFound()
 {
