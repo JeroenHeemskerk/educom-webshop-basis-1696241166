@@ -98,6 +98,7 @@ function showMenu()
               <li><a href="index.php?page=home">HOME</a></li>
               <li><a href="index.php?page=about">ABOUT</a></li>
               <li><a href="index.php?page=contact">CONTACT</a></li>
+              <li><a href="index.php?page=register">REGISTER</a></li>
           </ul>
         </nav>';
 
