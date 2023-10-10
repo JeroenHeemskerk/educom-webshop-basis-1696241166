@@ -84,15 +84,14 @@
     }
    
     function showContactForm($data) {
-           
-           echo '<form method="POST" action="index.php"
+           echo '<form method="POST" action="index.php">
                 <select name="salutation" id="salutation">
-                    <option value="mr"';  if (isset($salutation) && $salutation=="mr") echo "selected"; 'Dhr.</option>
-                    <option value="mrs"'; if (isset($salutation) && $salutation=="mrs") echo "selected";'Mevr.</option>
+                    <option value="mr"'; if (isset($data['salutation']) && $data['salutation']=="mr") echo "selected"; echo '>' . 'Dhr.</option>
+                    <option value="mrs"'; if (isset($data['salutation']) && $data['salutation']=="mrs") echo "selected"; echo '>' . 'Mevr.</option>
                 </select> </br>
                 <span class="error">'; echo $data['salutationErr'] . '</span></br></br>
 
-                <label for="name">Naam:</label>
+                <label for="name">Name:</label>
                 <input type="text" name="name" id="name" value="'. $data['name'] . '"></br>
                 <span class="error">' . $data['nameErr'] . '</span>
                 <br><br>
@@ -102,27 +101,29 @@
                 <span class="error">' . $data['emailErr'] . '</span>
                 <br><br>
 
-                <label for="phonenumber">Telefoonnummer:</label>
+                <label for="phonenumber">Phonenumber:</label>
                 <input type="text" name="phonenumber" id="phonenumber" value="'. $data['phonenumber'] . '"></br></br>
                 <span class="error">' . $data['phonenumberErr'] . '</span>
                 <br><br>
 
-                <label for="comm_preference">Communicatievoorkeur:</label>
+                <label for="comm_preference">Communication preference:</label>
                 
-                <input type="radio" name="comm_preference" id="communication_email"'; if (isset($comm_preference) && $comm_preference=="email") echo "checked";' value="'. $data['email'].'">
+                <input type="radio" name="comm_preference" id="communication_email"' ; if (isset($data['comm_preference']) && $data['comm_preference']=="email") echo "checked"; echo ' value="email">
                 <label for="email">Email</label>
                 
-                <input type="radio" name="comm_preference" id="communication_phone"'; if (isset($comm_preference) && $comm_preference=="phone") echo "checked";' value="'. $data['phonenumber'].'">
-                <label for="phone">Telefoon</label></br>
+                <input type="radio" name="comm_preference" id="communication_phone"'; if (isset($data['comm_preference']) && $data['comm_preference']=="phone") echo "checked"; echo' value="phone">
+                <label for="phone">Phone</label></br>
                 
                 <span class="error">'; echo $data['comm_preferenceErr'] . '</span></br></br>
 
-                <label for="message">Contact:</label></br>
-                <textarea name="message" id="contact" cols="40" rows="5" placeholder="Schrijf hier je bericht">' . $data['messageErr'] . '</textarea></br>
+                <label for="message">Message:</label></br>
+                <textarea name="message" id="contact" cols="40" rows="5" placeholder="Type your message here">' . $data['message'] . '</textarea></br>
                 <span class="error">' . $data['messageErr'] . '</span>
                 <br><br>
 
-                <button>Verzenden</button>
+                <input hidden name="page" value="contact"></input>
+
+                <button type="submit">Submit</button>
             </form>';
     }
 
@@ -131,10 +132,10 @@
 
     echo ' <p>Bedankt voor uw reactie:</p>
      
-     <div>Name:'; echo $data['salutation'] ." ". $data['name'] . '</div>
-     <div>Email:'; echo $data['email'] .'</div>
-     <div>Phonenumber:'; echo $data['phonenumber']; '</div>
-     <div>Communication preference:'; echo $data['comm_preference']; '</div>
-     <div>Your message:'; echo $data['message'] .'</div>';
+     <div>Name:' . $data['salutation'] ." ". $data['name'] . '</div>
+     <div>Email:' . $data['email'] .'</div>
+     <div>Phonenumber:' . $data['phonenumber'] . '</div>
+     <div>Communication preference:' . $data['comm_preference'] . '</div>
+     <div>Your message:' . $data['message'] .'</div>';
     }
      
