@@ -119,6 +119,10 @@ function showContent($page)
             require('contact.php');    
             showContactContent();
             break;
+        case 'register':
+             require('register.php');    
+             showRegisterContent();
+                break;
         default:
             showPageNotFound();
     }
