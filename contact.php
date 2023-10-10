@@ -1,5 +1,5 @@
 
-    <?php
+<?php
 
     function  showContactContent(){
         $data = validateContact();
@@ -80,15 +80,15 @@
                 $valid = false;
             }
         }
-        return ["messageErr"=> $messageErr, "phonenumberErr"=> $phonenumberErr, "emailErr" => $emailErr, "nameErr" => $nameErr,"salutationErr"=> $salutationErr, "valid"=> $valid, "name" => $name, "phonenumber"=> $phonenumber, "email"=> $email];
+        return ["comm_preferenceErr"=> $comm_preferenceErr, "messageErr"=> $messageErr, "phonenumberErr"=> $phonenumberErr, "emailErr" => $emailErr, "nameErr" => $nameErr,"comm_preference"=> $comm_preference, "salutationErr"=> $salutationErr, "valid"=> $valid, "name" => $name, "phonenumber"=> $phonenumber, "email"=> $email, "salutation"=> $salutation, "message"=> $message];
     }
    
     function showContactForm($data) {
            
-           echo '<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>
+           echo '<form method="POST" action="'. htmlspecialchars($_SERVER["PHP_SELF"]); '"
                 <select name="salutation" id="salutation">
-                    <option value="mr" <?php if (isset($salutation) && $salutation=="mr") echo "selected";?>Dhr.</option>
-                    <option value="mrs" <?php if (isset($salutation) && $salutation=="mrs") echo "selected";?>Mevr.</option>
+                    <option value="mr"';  if (isset($salutation) && $salutation=="mr") echo "selected"; 'Dhr.</option>
+                    <option value="mrs"'; if (isset($salutation) && $salutation=="mrs") echo "selected";'Mevr.</option>
                 </select> </br>
                 <span class="error">'; echo $data['salutationErr'] . '</span></br></br>
 
@@ -109,13 +109,13 @@
 
                 <label for="comm_preference">Communicatievoorkeur:</label>
                 
-                <input type="radio" name="comm_preference" id="communication_email" <?php if (isset($comm_preference) && $comm_preference=="email") echo "checked";?> value="email">
+                <input type="radio" name="comm_preference" id="communication_email"'; if (isset($comm_preference) && $comm_preference=="email") echo "checked";' value="email">
                 <label for="email">Email</label>
                 
-                <input type="radio" name="comm_preference" id="communication_phone" <?php if (isset($comm_preference) && $comm_preference=="phone") echo "checked";?> value="phone">
+                <input type="radio" name="comm_preference" id="communication_phone"'; if (isset($comm_preference) && $comm_preference=="phone") echo "checked";' value="phone">
                 <label for="phone">Telefoon</label></br>
                 
-                <span class="error"> <?php echo $comm_preferenceErr; ?></span></br></br>
+                <span class="error">'; echo $comm_preferenceErr . '</span></br></br>
 
                 <label for="message">Contact:</label></br>
                 <textarea name="message" id="contact" cols="40" rows="5" placeholder="Schrijf hier je bericht">' . $data['messageErr'] . '</textarea></br>
@@ -131,10 +131,10 @@
 
     echo ' <p>Bedankt voor uw reactie:</p>
      
-     <div>Name: <?php echo $salutation ." ". $name; ?></div>
-     <div>Email: <?php echo $email; ?></div>
-     <div>Phonenumber: <?php echo $phonenumber; ?></div>
-     <div>Communication preference: <?php echo $comm_preference; ?></div>
-     <div>Your message: <?php echo $message; ?></div>';
+     <div>Name:'; echo $salutation ." ". $name . '</div>
+     <div>Email:'; echo $email .'</div>
+     <div>Phonenumber:'; echo $phonenumber; '</div>
+     <div>Communication preference:'; echo $comm_preference; '</div>
+     <div>Your message:'; echo $message .'</div>';
     }
      

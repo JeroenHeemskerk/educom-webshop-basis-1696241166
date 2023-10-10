@@ -101,8 +101,6 @@ function showMenu()
           </ul>
         </nav>';
 
-    // Dit is de NAVbar voor een GET request. 
-    //Misschien moet ik nog een en ander aanpassen om dit ook werkend te krijgen voor POST requests. 
 }
 
 function showContent($page)
