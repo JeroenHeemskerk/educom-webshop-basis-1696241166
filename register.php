@@ -2,7 +2,6 @@
 include('common-functions.php');
 
 
-
 function  showRegisterContent(){
     $registrationData = validateRegistration();
     if (!$registrationData['valid']) { 
@@ -10,26 +9,36 @@ function  showRegisterContent(){
     } else{
         // showRegisterThanks($registrationData);?
         // Hier moet ik de registratie informatie opslaan in users.txt (bijvoorbeeld registerUser();
-        // En misschien daarna naar home terug navigeren (volgens mij staat dat in de opdracht)
+        // Daarna navigeren naar de login page
     }
 }
 
-function showRegisterForm(){
+function showRegisterForm($registrationData){
     echo '
-    <form method="POST" action="index.php">
+    <form method="POST" action="index.php?page=login">
         <label for="name">Name:</label>
-        <input type="text" name="name" id="name"></br></br>
+        <input type="text" name="name" id="name" value="'. $registrationData['name'] . '"></br>
+        <span class="error">' . $registrationData['nameErr'] . '</span>
+        </br></br>
 
         <label for="email">Email:</label>
-        <input type="text" name="email" id="email"></br></br>
+        <input type="text" name="email" id="email" value="'. $registrationData['email'] . '"></br>
+        <span class="error">' . $registrationData['emailErr'] . '</span>
+        </br></br>
 
         <label for="pwd">Password:</label>
-        <input type="password" id="pwd" name="pwd"></br></br>
+        <input type="password" id="pwd" name="pwd" value="'. $registrationData['password'] . '"></br>
+        <span class="error">' . $registrationData['passwordErr'] . '</span>
+        </br></br>
 
         <label for="repeat_pwd">Repeat password:</label>
-        <input type="password" id="repeat_pwd" name="pwd"></br></br>
+        <input type="password" id="repeat_pwd" name="pwd" value="'. $registrationData['repeatedPassword'] . '"></br>
+        <span class="error">' . $registrationData['repeatedPasswordErr'] . '</span>
+        </br></br>
 
-        <button>Submit</button>
+        <input hidden name="page" value="register"></input>
+
+        <button type= "submit">Submit</button>
     </form>';
 }
 
@@ -80,8 +89,9 @@ function validateRegistration(){
         if (checkIfEmailExists($email)){
             $emailErr = "*This emailadress is already registered";
         }
-    }
+
         $valid = empty($nameErr) && empty($emailErr) && empty($passwordErr) && empty($repeatedPasswordErr); 
+    }
     
     return ["name"=>$name, "nameErr"=>$nameErr, "email"=>$email, "emailErr"=>$emailErr, "password"=>$password, "passwordErr"=>$passwordErr, "repeatedPassword"=>$repeatedPassword, "repeatedPasswordErr"=>$repeatedPasswordErr, "valid"=>$valid];
 }

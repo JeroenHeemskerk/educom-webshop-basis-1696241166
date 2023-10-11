@@ -99,6 +99,8 @@ function showMenu()
               <li><a href="index.php?page=about">ABOUT</a></li>
               <li><a href="index.php?page=contact">CONTACT</a></li>
               <li><a href="index.php?page=register">REGISTER</a></li>
+              <li><a href="index.php?page=login">LOGIN</a></li>
+
           </ul>
         </nav>';
 
@@ -122,6 +124,10 @@ function showContent($page)
         case 'register':
              require('register.php');    
              showRegisterContent();
+                break;
+        case 'login':
+             require('login.php');    
+             showLoginContent();
                 break;
         default:
             showPageNotFound();
