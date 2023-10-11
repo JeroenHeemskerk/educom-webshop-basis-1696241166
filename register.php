@@ -1,8 +1,7 @@
 <?php
+include('common-functions.php');
 
-function showRegisterContent(){
-    showRegisterForm();
-}
+$registrationdata = validateRegistration();
 
 
 
@@ -25,3 +24,59 @@ function showRegisterForm(){
     </form>';
 }
 
+
+function validateRegistration(){
+
+    //initiate variables
+    $name = $email = $password = $repeatedpassword = "";
+    $nameErr = $emailErr = $passwordErr = $repeatedpasswordErr = "";
+    $valid = false;
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // validate for the 'POST' data
+        if (empty($_POST["name"])) {
+            $nameErr = "*Name is required";
+        } else {
+            $name = test_input($_POST["name"]);
+            // check if name only contains letters and whitespace
+             if (!preg_match("/^[a-zA-Z-' ]*$/", $name)) {
+                $nameErr = "*Only letters and white space allowed";
+                }
+        }
+
+        if (empty($_POST["email"])) {
+            $emailErr = "*Email is required";
+        } else {
+            $email = test_input($_POST["email"]);
+            // check if e-mail address is well-formed
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $emailErr = "*Invalid email format";
+            }
+        }
+    
+
+        if (empty($_POST["password"])) {
+            $passwordErr = "*Password is required";
+        } else {
+            $password = test_input($_POST["password"]);
+        }
+
+        if (empty($_POST["repeatedpassword"])) {
+            $repeatedpasswordErr = "*Password is required";
+        } else {
+            $repeatedpassword = test_input($_POST["repeatedpassword"]);
+            if ($password != $repeatedpassword){
+                $passwordErr = $repeatedpasswordErr = "*Passwords do not match";
+            }
+        }
+        if (checkIfEmailExists()){
+            $emailErr = "*This emailadress is already registered";
+        }
+    }
+    return  $valid = empty($nameErr) && empty($emailErr) && empty($passwordErr) && empty($repeatedpasswordErr); ;
+
+}
+
+function checkIfEmailExists(){
+
+}

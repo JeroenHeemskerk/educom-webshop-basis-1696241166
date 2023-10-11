@@ -121,7 +121,7 @@ function showContent($page)
             break;
         case 'register':
              require('register.php');    
-             showRegisterContent();
+             showRegisterForm();
                 break;
         default:
             showPageNotFound();

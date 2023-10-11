@@ -1,6 +1,8 @@
 
 <?php
 
+include('common-functions.php');
+
     function  showContactContent(){
         $data = validateContact();
         if (!$data['valid']) { 
@@ -10,13 +12,6 @@
         }
     }
 
-    function test_input($data)
-    {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
 
     function validateContact() {
         // initate the variables 
