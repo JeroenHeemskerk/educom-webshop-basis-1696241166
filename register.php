@@ -1,9 +1,18 @@
 <?php
 include('common-functions.php');
 
-$registrationdata = validateRegistration();
 
 
+function  showRegisterContent(){
+    $registrationData = validateRegistration();
+    if (!$registrationData['valid']) { 
+        showRegisterForm($registrationData);
+    } else{
+        // showRegisterThanks($registrationData);?
+        // Hier moet ik de registratie informatie opslaan in users.txt (bijvoorbeeld registerUser();
+        // En misschien daarna naar home terug navigeren (volgens mij staat dat in de opdracht)
+    }
+}
 
 function showRegisterForm(){
     echo '
@@ -28,8 +37,8 @@ function showRegisterForm(){
 function validateRegistration(){
 
     //initiate variables
-    $name = $email = $password = $repeatedpassword = "";
-    $nameErr = $emailErr = $passwordErr = $repeatedpasswordErr = "";
+    $name = $email = $password = $repeatedPassword = "";
+    $nameErr = $emailErr = $passwordErr = $repeatedPasswordErr = "";
     $valid = false;
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -53,7 +62,6 @@ function validateRegistration(){
                 $emailErr = "*Invalid email format";
             }
         }
-    
 
         if (empty($_POST["password"])) {
             $passwordErr = "*Password is required";
@@ -61,22 +69,27 @@ function validateRegistration(){
             $password = test_input($_POST["password"]);
         }
 
-        if (empty($_POST["repeatedpassword"])) {
-            $repeatedpasswordErr = "*Password is required";
+        if (empty($_POST["repeatedPassword"])) {
+            $repeatedPasswordErr = "*Password is required";
         } else {
-            $repeatedpassword = test_input($_POST["repeatedpassword"]);
-            if ($password != $repeatedpassword){
-                $passwordErr = $repeatedpasswordErr = "*Passwords do not match";
+            $repeatedPassword = test_input($_POST["repeatedPassword"]);
+            if ($password != $repeatedPassword){
+                $passwordErr = $repeatedPasswordErr = "*Passwords do not match";
             }
         }
-        if (checkIfEmailExists()){
+        if (checkIfEmailExists($email)){
             $emailErr = "*This emailadress is already registered";
         }
     }
-    return  $valid = empty($nameErr) && empty($emailErr) && empty($passwordErr) && empty($repeatedpasswordErr); ;
-
+        $valid = empty($nameErr) && empty($emailErr) && empty($passwordErr) && empty($repeatedPasswordErr); 
+    
+    return ["name"=>$name, "nameErr"=>$nameErr, "email"=>$email, "emailErr"=>$emailErr, "password"=>$password, "passwordErr"=>$passwordErr, "repeatedPassword"=>$repeatedPassword, "repeatedPasswordErr"=>$repeatedPasswordErr, "valid"=>$valid];
 }
 
-function checkIfEmailExists(){
 
+
+function checkIfEmailExists($email){
+    $usersfile = file_get_contents("users/users.txt");
+    return str_contains($usersfile, $email);
 }
+
