@@ -7,6 +7,9 @@ function  showRegisterContent(){
     if (!$registrationData['valid']) { 
         showRegisterForm($registrationData);
     } else{
+        registerUser($registrationData);
+        // showLoginForm(); deze gebruiken? Dan moet ik de login file importeren
+        
         // showRegisterThanks($registrationData);?
         // Hier moet ik de registratie informatie opslaan in users.txt (bijvoorbeeld registerUser();
         // Daarna navigeren naar de login page
@@ -26,13 +29,13 @@ function showRegisterForm($registrationData){
         <span class="error">' . $registrationData['emailErr'] . '</span>
         </br></br>
 
-        <label for="pwd">Password:</label>
-        <input type="password" id="pwd" name="pwd" value="'. $registrationData['password'] . '"></br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" value="'. $registrationData['password'] . '"></br>
         <span class="error">' . $registrationData['passwordErr'] . '</span>
         </br></br>
 
-        <label for="repeat_pwd">Repeat password:</label>
-        <input type="password" id="repeat_pwd" name="pwd" value="'. $registrationData['repeatedPassword'] . '"></br>
+        <label for="repeatedPassword">Repeat password:</label>
+        <input type="password" id="repeatedPassword" name="repeatedPassword" value="'. $registrationData['repeatedPassword'] . '"></br>
         <span class="error">' . $registrationData['repeatedPasswordErr'] . '</span>
         </br></br>
 
@@ -103,3 +106,10 @@ function checkIfEmailExists($email){
     return str_contains($usersfile, $email);
 }
 
+function registerUser($registrationData){
+
+$usersfile = fopen("<users/users.txt", "a") or die("Unable to open file!");
+$user = "$registrationData[email]|$registrationData[name]|$registrationData[password]\n";
+fwrite($usersfile, $user);
+fclose($usersfile);
+}

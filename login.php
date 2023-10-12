@@ -20,8 +20,8 @@ function showLoginForm($loginData){
         <span class="error">' . $loginData['emailErr'] . '</span>
         </br></br>
 
-        <label for="pwd">Password:</label>
-        <input type="password" id="pwd" name="pwd" value="'. $loginData['password'] . '"></br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" value="'. $loginData['password'] . '"></br>
         <span class="error">' . $loginData['passwordErr'] . '</span>
         </br></br>
 
@@ -58,20 +58,22 @@ function validateLogin(){
             $password = test_input($_POST["password"]);
         }
 
-        if (checkIfEmailExists($email)){
-            $emailErr = "*This emailadress is already registered";
-        }
-
         $valid = empty($emailErr) && empty($passwordErr); 
     }
     
     return ["email"=>$email, "emailErr"=>$emailErr, "password"=>$password, "passwordErr"=>$passwordErr, "valid"=>$valid];
 }
 
+function isLoggedIn(){
+    return false;
+     //Voor nu even op false gezet / hier moet nog logica in
+ }
+ 
 
 
-function checkIfEmailExists($email){
-    $usersfile = file_get_contents("users/users.txt");
-    return str_contains($usersfile, $email);
-}
+
+// function checkIfEmailExists($email){
+//     $usersfile = file_get_contents("users/users.txt");
+//     return str_contains($usersfile, $email);
+// }
 

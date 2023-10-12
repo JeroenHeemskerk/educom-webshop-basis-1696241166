@@ -1,6 +1,7 @@
 
 <?php
 
+
 // ===================================
 // MAIN APP
 // ===================================
@@ -100,7 +101,6 @@ function showMenu()
               <li><a href="index.php?page=contact">CONTACT</a></li>
               <li><a href="index.php?page=register">REGISTER</a></li>
               <li><a href="index.php?page=login">LOGIN</a></li>
-
           </ul>
         </nav>';
 
@@ -154,6 +154,14 @@ function showPageNotFound()
 ?>
 
 
+<!-- /Dit stuk code geeft me heel veel errors - blijft maar zeggen dat ik functies 'redeclare.' 
+/ include("login.php");
+// if (isLoggedIn() == false){
+//    echo '<li><a href="index.php?page=register">REGISTER</a></li>
+//    <li><a href="index.php?page=login">LOGIN</a></li>';
+//  } else {
+//    echo '<li><a href="index.php?page=login">LOGOUT</a></li>';
+//  }'
 
-
+ -->
 
