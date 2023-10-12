@@ -7,7 +7,8 @@ function  showLoginContent(){
     if (!$loginData['valid']) { 
         showLoginForm($loginData);
     } else{
-        // ?
+        // Hier wil ik nagaan of het emailadres en het ww matchen/bestaan
+        checkIfLoginExists($loginData);
     }
 }
 
@@ -70,10 +71,18 @@ function isLoggedIn(){
  }
  
 
+function checkIfLoginExists($loginData){
+    $usersfile = file_get_contents("users/users.txt");
+    $usersfileArray = explode($usersfile, "/n"); // Nu zou elke losse regel een array moeten vormen
+    var_dump("hallo");
+    var_dump($usersfileArray);
 
 
-// function checkIfEmailExists($email){
-//     $usersfile = file_get_contents("users/users.txt");
-//     return str_contains($usersfile, $email);
-// }
+    // if (str_contains($usersfile, "$loginData[email]")){
+    //     echo "true";
+    // } else {
+    //     echo "false";
+    // }
 
+
+}
