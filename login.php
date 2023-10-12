@@ -72,13 +72,25 @@ function isLoggedIn(){
  
 
 function checkIfLoginExists($loginData){
-    $usersfile = file_get_contents("users/users.txt");
-    $usersfileArray = explode($usersfile, "/n"); // Nu zou elke losse regel een array moeten vormen
-    var_dump("hallo");
-    var_dump($usersfileArray);
+    $usersfile = fopen("users/users.txt", "r") or die("Unable to open file!");
+    fgets($usersfile); // Ik pak hier de eerste 'line' en sla hem niet op, zodat hij hierna bij line 2 begint. 
+    // Hieronder staat: Zolang je niet aan het einde van het document bent, lees en output steeds 1 line.
+     while(!feof($usersfile)) {
+        $line = fgets($usersfile);
+        // var_dump($line);
+        $parts = explode("|", $line); // Elke losse regel is nu een array met 3 elementen (element 0 = email)
+        var_dump($parts);
+            while (!feof($parts)){
+                
+            }
+      }
+        fclose($usersfile);
+
+        //in parts zitten nu alle arrays (1 per user). Ik wil nu loopen over alle arrays, element 0, om te kijken of 
+        // de gebruikte email hierin voorkomt. Parts bestaat alleen in bovenstaande loop!
 
 
-    // if (str_contains($usersfile, "$loginData[email]")){
+    // if (str_contains($parts, "$loginData[email]")){
     //     echo "true";
     // } else {
     //     echo "false";

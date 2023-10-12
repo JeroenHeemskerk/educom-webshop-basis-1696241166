@@ -1,2 +1,5 @@
 [email]|[naam]|[wachtwoord]
 coach@man-kind.nl|Geert Weggemans|halt!
+ramiwohl@hotmail.com|Rami Wohl|hallo\n
+laurabokkers@hotmail.com|Laura Bokkers|hoi\n
+laurabokkers@hotmail.com|Laura Bokkers|hoi\n
