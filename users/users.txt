@@ -5,3 +5,7 @@ laurabokkers@hotmail.com|Laura Bokkers|hoi
 henk@hotmail.com|henk|hallo
 hans@hotmail.com|hans|welkom
 piet@hotmail.com|piet|welkom
+
+jantje@jantje.com|Jantje|hallo
+klaas@hotmail.com|klaas|hallo
+claus@hotmail.com|claus|hallo

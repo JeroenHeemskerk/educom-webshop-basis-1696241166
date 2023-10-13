@@ -1,6 +1,8 @@
 
 <?php
 
+// deze moet nog helemaal omgeschreven op dezelfde manier als register en login
+
     function showContactContent(){
         $data = validateContact();
         if (!$data['valid']) { 

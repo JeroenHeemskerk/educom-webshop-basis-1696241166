@@ -1,22 +1,22 @@
 <?php
 
 
-function getRegisterData(){
-    
+function getRegisterData()
+{
+    //initiate variables
+    $registerData = ["page" => "register", "name" => "", "email" => "", "password" => "", "repeatedPassword" => "", "nameErr" => "", "emailErr" => "", "passwordErr" => "", "repeatedPasswordErr" => "", "valid" => false];
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $registerData = validateRegister($registerData);
+
+        if ($registerData['valid']) {
+            registerUser($registerData);
+            $registerData = getInitialLoginFormData();
+        }
+    }
+    return $registerData;
 }
 
-function showRegisterContent()
-{
-    $registrationData = validateRegistration();
-    if (!$registrationData['valid']) {
-        showRegisterForm($registrationData);
-    } else {
-        registerUser($registrationData);
-        // Hier moet ik de registratie informatie opslaan in users.txt (bijvoorbeeld registerUser();
-        // Daarna navigeren naar de login page
-        showLoginForm(["email" => "", "emailErr" => "", "password" => "", "passwordErr" => "", "valid" => false]);
-    }
-}
 
 function showRegisterForm($registrationData)
 {
@@ -49,58 +49,6 @@ function showRegisterForm($registrationData)
 }
 
 
-function validateRegistration()
-{
-    //initiate variables
-    $name = $email = $password = $repeatedPassword = "";
-    $nameErr = $emailErr = $passwordErr = $repeatedPasswordErr = "";
-    $valid = false;
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // validate for the 'POST' data
-        if (empty($_POST["name"])) {
-            $nameErr = "*Name is required";
-        } else {
-            $name = test_input($_POST["name"]);
-            // check if name only contains letters and whitespace
-            if (!preg_match("/^[a-zA-Z-' ]*$/", $name)) {
-                $nameErr = "*Only letters and white space allowed";
-            }
-        }
-
-        if (empty($_POST["email"])) {
-            $emailErr = "*Email is required";
-        } else {
-            $email = test_input($_POST["email"]);
-            // check if e-mail address is well-formed
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $emailErr = "*Invalid email format";
-            }
-        }
-
-        if (empty($_POST["password"])) {
-            $passwordErr = "*Password is required";
-        } else {
-            $password = test_input($_POST["password"]);
-        }
-
-        if (empty($_POST["repeatedPassword"])) {
-            $repeatedPasswordErr = "*Password is required";
-        } else {
-            $repeatedPassword = test_input($_POST["repeatedPassword"]);
-            if ($password != $repeatedPassword) {
-                $passwordErr = $repeatedPasswordErr = "*Passwords do not match";
-            }
-        }
-        if (doesEmailExist($email)) {
-            $emailErr = "*This emailadress is already registered";
-        }
-
-        $valid = empty($nameErr) && empty($emailErr) && empty($passwordErr) && empty($repeatedPasswordErr);
-    }
-
-    return ["name" => $name, "nameErr" => $nameErr, "email" => $email, "emailErr" => $emailErr, "password" => $password, "passwordErr" => $passwordErr, "repeatedPassword" => $repeatedPassword, "repeatedPasswordErr" => $repeatedPasswordErr, "valid" => $valid];
-}
 
 function registerUser($registrationData)
 {

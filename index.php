@@ -8,6 +8,7 @@ include('about.php');
 include('contact.php');
 include('register.php');
 include('common-functions.php');
+include('user-service.php');
 session_start();
 
 // ===================================
@@ -42,6 +43,8 @@ function showResponsePage($pageData)
     endDocument();
 };
 
+
+//input is de route
 function processRequest($page)
 {
     $pageData = [];
@@ -49,15 +52,18 @@ function processRequest($page)
     switch ($page) {
         case 'home':
             $pageData['page'] = $page;
+            // ["page" => "home"]
             break;
         case 'about':
             $pageData['page'] = $page;
             break;
         case 'login':
             $pageData = getLoginData();
+            // ["page" => "login", "email" => ""]
             break;
         case 'register':
-            validateRegister();
+            $pageData = getRegisterData();
+             // ["page" => "register", "email" => ""]
             break;
         case 'contact':
             validateContact();
@@ -163,7 +169,7 @@ function showContent($pageData)
             showContactContent();
             break;
         case 'register':
-            showRegisterContent();
+            showRegisterForm($pageData);
             break;
         case 'login':
             showLoginForm($pageData);

@@ -1,9 +1,14 @@
 <?php
 
+function getInitialLoginFormData()
+{
+    return  ["page" => "login", "email" => "", "emailErr" => "", "password" => "", "passwordErr" => "", "valid" => false];
+}
+
 function getLoginData()
 {
     //initiate variables
-    $loginData = ["page" => "login", "email" => "", "emailErr" => "", "password" => "", "passwordErr" => "", "valid" => false];
+    $loginData = getInitialLoginFormData();
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $loginData = validateLogin($loginData);
     }
@@ -27,7 +32,7 @@ function showLoginForm($loginData)
 
         <input hidden name="page" value="login"></input>
 
-        <button type="submit">Submit</button>
+        <button type="submit">Login</button>
     </form>';
 }
 
