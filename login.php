@@ -1,5 +1,6 @@
 <?php
 include('common-functions.php');
+include('home.php');
 
 
 function  showLoginContent()
@@ -8,7 +9,7 @@ function  showLoginContent()
     if (!$loginData['valid']) {
         showLoginForm($loginData);
     } else {
-        // Hier wil ik nagaan of het emailadres en het ww matchen/bestaan
+       showHomeContent();
     }
 }
 

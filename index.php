@@ -1,7 +1,5 @@
-
 <?php
 session_start();
-var_dump($_SESSION);
 
 // ===================================
 // MAIN APP
@@ -83,14 +81,14 @@ function endDocument()
     echo  '</html>';
 }
 
- 
+
 
 //============================================== 
 
 
 function showHeader($page)
 {
-    echo '<h1 class="headers">'. $page . 'page</h1>';
+    echo '<h1 class="headers">' . $page . 'page</h1>';
 }
 
 function showMenu()
@@ -99,16 +97,15 @@ function showMenu()
           <ul class="menu">
               <li><a href="index.php?page=home">HOME</a></li>
               <li><a href="index.php?page=about">ABOUT</a></li>
-              <li><a href="index.php?page=contact">CONTACT</a></li>
-              <li><a href="index.php?page=register">REGISTER</a></li>
-              <li><a href="index.php?page=login">LOGIN</a></li>
-          </ul>
+              <li><a href="index.php?page=contact">CONTACT</a></li>';
+    if (isset($_SESSION['name'])) {
+        echo '<li><a href="index.php?page=logout">LOGOUT ' . $_SESSION['name'] . '</a></li>';
+    } else {
+        echo '<li><a href="index.php?page=register">REGISTER</a></li>
+            <li><a href="index.php?page=login">LOGIN</a></li>';
+    }
+    echo '</ul>
         </nav>';
-
-        // if(isset($_SESSION['name']){
-        //     echo '<li><a href="index.php?page=logout">LOGIN</a></li>';
-        // })
-
 }
 
 function showContent($page)
@@ -123,17 +120,22 @@ function showContent($page)
             showAboutContent();
             break;
         case 'contact':
-            require('contact.php');    
+            require('contact.php');
             showContactContent();
             break;
         case 'register':
-             require('register.php');    
-             showRegisterContent();
-                break;
+            require('register.php');
+            showRegisterContent();
+            break;
         case 'login':
-             require('login.php');    
-             showLoginContent();
-                break;
+            require('login.php');
+            showLoginContent();
+            break;
+        case 'logout':
+            require('logout.php');
+            logout();
+            break;
+
         default:
             showPageNotFound();
     }
@@ -154,19 +156,4 @@ function showPageNotFound()
 {
     echo 'Page not found';
 }
-
-
 ?>
-
-
-<!-- /Dit stuk code geeft me heel veel errors - blijft maar zeggen dat ik functies 'redeclare.' 
-/ include("login.php");
-// if (isLoggedIn() == false){
-//    echo '<li><a href="index.php?page=register">REGISTER</a></li>
-//    <li><a href="index.php?page=login">LOGIN</a></li>';
-//  } else {
-//    echo '<li><a href="index.php?page=login">LOGOUT</a></li>';
-//  }'
-
- -->
-

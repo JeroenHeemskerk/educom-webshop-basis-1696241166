@@ -1,5 +1,5 @@
 <?php
-include('common-functions.php');
+include('login.php');
 
 function  showRegisterContent()
 {
@@ -11,6 +11,7 @@ function  showRegisterContent()
         // showRegisterThanks($registrationData);?
         // Hier moet ik de registratie informatie opslaan in users.txt (bijvoorbeeld registerUser();
         // Daarna navigeren naar de login page
+        showLoginForm(["email" => "", "emailErr" => "", "password" => "", "passwordErr" => "", "valid" => false]);
     }
 }
 
@@ -47,7 +48,6 @@ function showRegisterForm($registrationData)
 
 function validateRegistration()
 {
-
     //initiate variables
     $name = $email = $password = $repeatedPassword = "";
     $nameErr = $emailErr = $passwordErr = $repeatedPasswordErr = "";
@@ -99,8 +99,6 @@ function validateRegistration()
     return ["name" => $name, "nameErr" => $nameErr, "email" => $email, "emailErr" => $emailErr, "password" => $password, "passwordErr" => $passwordErr, "repeatedPassword" => $repeatedPassword, "repeatedPasswordErr" => $repeatedPasswordErr, "valid" => $valid];
 }
 
-
-
 function checkIfEmailExists($email)
 {
     $usersfile = file_get_contents("users/users.txt");
@@ -109,7 +107,6 @@ function checkIfEmailExists($email)
 
 function registerUser($registrationData)
 {
-
     $usersfile = fopen("<users/users.txt", "a") or die("Unable to open file!");
     $user = "$registrationData[email]|$registrationData[name]|$registrationData[password]" . PHP_EOL;
     fwrite($usersfile, $user);
