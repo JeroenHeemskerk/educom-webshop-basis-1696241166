@@ -2,27 +2,29 @@
 include('common-functions.php');
 
 
-function  showLoginContent(){
+function  showLoginContent()
+{
     $loginData = validatelogin();
-    if (!$loginData['valid']) { 
+    if (!$loginData['valid']) {
         showLoginForm($loginData);
-    } else{
+    } else {
         // Hier wil ik nagaan of het emailadres en het ww matchen/bestaan
         checkIfLoginExists($loginData);
     }
 }
 
-function showLoginForm($loginData){
+function showLoginForm($loginData)
+{
     echo '
     <form method="POST" action="index.php">
 
         <label for="email">Email:</label>
-        <input type="text" name="email" id="email" value="'. $loginData['email'] . '"></br>
+        <input type="text" name="email" id="email" value="' . $loginData['email'] . '"></br>
         <span class="error">' . $loginData['emailErr'] . '</span>
         </br></br>
 
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" value="'. $loginData['password'] . '"></br>
+        <input type="password" id="password" name="password" value="' . $loginData['password'] . '"></br>
         <span class="error">' . $loginData['passwordErr'] . '</span>
         </br></br>
 
@@ -33,7 +35,8 @@ function showLoginForm($loginData){
 }
 
 
-function validateLogin(){
+function validateLogin()
+{
 
     //initiate variables
     $email = $password = "";
@@ -59,42 +62,48 @@ function validateLogin(){
             $password = test_input($_POST["password"]);
         }
 
-        $valid = empty($emailErr) && empty($passwordErr); 
+        $valid = empty($emailErr) && empty($passwordErr);
     }
-    
-    return ["email"=>$email, "emailErr"=>$emailErr, "password"=>$password, "passwordErr"=>$passwordErr, "valid"=>$valid];
+
+    return ["email" => $email, "emailErr" => $emailErr, "password" => $password, "passwordErr" => $passwordErr, "valid" => $valid];
 }
 
-function isLoggedIn(){
+function isLoggedIn()
+{
     return false;
-     //Voor nu even op false gezet / hier moet nog logica in
- }
- 
+    //Voor nu even op false gezet / hier moet nog logica in
+}
 
-function checkIfLoginExists($loginData){
+
+function checkIfLoginExists($loginData)
+{
     $usersfile = fopen("users/users.txt", "r") or die("Unable to open file!");
     fgets($usersfile); // Ik pak hier de eerste 'line' en sla hem niet op, zodat hij hierna bij line 2 begint. 
     // Hieronder staat: Zolang je niet aan het einde van het document bent, lees en output steeds 1 line.
-     while(!feof($usersfile)) {
+    while (!feof($usersfile)) {
         $line = fgets($usersfile);
         // var_dump($line);
         $parts = explode("|", $line); // Elke losse regel is nu een array met 3 elementen (element 0 = email)
-        var_dump($parts);
-            while (!feof($parts)){
-                
+
+        if ($parts[0] == $loginData['email']) {
+            // DAN ook checken of de passwords correct zijn ingevoerd (ww = element 2)
+            if ($parts[2] == $loginData['password']) {
+
+                // Ik stop hier de naam in de session
+                $_SESSION["name"] = $parts[1];
+                // Login (start sessie)
+                // start session staat helemaal aan het begin in de index.php
+                var_dump('loggedin!');
+                break;
+            } else {
+                $loginData['passwordErr'] = "Wrong password";
             }
-      }
-        fclose($usersfile);
+        } else {
+            $loginData['emailErr'] = "This email-adress is not registered";
+            // In een HTML element oid?
 
-        //in parts zitten nu alle arrays (1 per user). Ik wil nu loopen over alle arrays, element 0, om te kijken of 
-        // de gebruikte email hierin voorkomt. Parts bestaat alleen in bovenstaande loop!
-
-
-    // if (str_contains($parts, "$loginData[email]")){
-    //     echo "true";
-    // } else {
-    //     echo "false";
-    // }
-
-
+        }
+    }
+    var_dump($loginData);
+    fclose($usersfile);
 }

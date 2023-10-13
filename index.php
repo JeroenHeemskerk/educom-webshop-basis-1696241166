@@ -1,6 +1,6 @@
 
 <?php
-
+session_start();
 
 // ===================================
 // MAIN APP
@@ -103,6 +103,10 @@ function showMenu()
               <li><a href="index.php?page=login">LOGIN</a></li>
           </ul>
         </nav>';
+
+        // if(isset($_SESSION['name']){
+        //     echo '<li><a href="index.php?page=logout">LOGIN</a></li>';
+        // })
 
 }
 

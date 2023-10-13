@@ -109,7 +109,7 @@ function checkIfEmailExists($email){
 function registerUser($registrationData){
 
 $usersfile = fopen("<users/users.txt", "a") or die("Unable to open file!");
-$user = "$registrationData[email]|$registrationData[name]|$registrationData[password]\n";
+$user = "$registrationData[email]|$registrationData[name]|$registrationData[password]";
 fwrite($usersfile, $user);
 fclose($usersfile);
 }
