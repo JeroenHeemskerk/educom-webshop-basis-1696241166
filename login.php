@@ -1,20 +1,13 @@
 <?php
-include('common-functions.php');
-include('home.php');
-include('session-manager.php');
 
-
-function  showLoginContent()
+function getLoginData()
 {
-
-    // showlogincontent gaat input krijgen (namelijk de validatie van de login page)
-    // output van de functie validateLoginInput wordt input van showLoginContent?
-    $loginData = validateLoginInput();
-    if (!$loginData['valid']) {
-        showLoginForm($loginData);
-    } else {
-       showHomeContent();
+    //initiate variables
+    $loginData = ["page" => "login", "email" => "", "emailErr" => "", "password" => "", "passwordErr" => "", "valid" => false];
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $loginData = validateLogin($loginData);
     }
+    return $loginData;
 }
 
 function showLoginForm($loginData)
@@ -36,42 +29,6 @@ function showLoginForm($loginData)
 
         <button type="submit">Submit</button>
     </form>';
-}
-
-
-function validateLoginInput()
-{
-
-    //initiate variables
-    $loginData = ["email" => "", "emailErr" => "", "password" => "", "passwordErr" => "", "valid" => false];
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // validate for the 'POST' data
-
-        if (empty($_POST["email"])) {
-            $loginData['emailErr'] = "*Email is required";
-        } else {
-            $loginData['email'] = test_input($_POST["email"]);
-            // check if e-mail address is well-formed
-            if (!filter_var($loginData['email'], FILTER_VALIDATE_EMAIL)) {
-                $loginData['emailErr'] = "*Invalid email format";
-            }
-        }
-
-        if (empty($_POST["password"])) {
-            $loginData['passwordErr'] = "*Password is required";
-        } else {
-            $loginData['password'] = test_input($_POST["password"]);
-        }
-
-        $loginData['valid'] = empty($loginData['emailErr']) && empty($loginData['passwordErr']);
-        
-        if($loginData['valid'] == true){
-            $loginData = validateLoginAttempt($loginData);
-        }
-    }
-
-    return $loginData;
 }
 
 function validateLoginAttempt($loginData)
@@ -98,11 +55,11 @@ function validateLoginAttempt($loginData)
                 $loginData['passwordErr'] = "Wrong password";
                 $loginData['valid'] = false;
             }
-        } 
+        }
     }
     fclose($usersfile);
 
-    if(!$userFound) {
+    if (!$userFound) {
         $loginData['emailErr'] = "Email address is not registered.";
         $loginData['valid'] = false;
     }

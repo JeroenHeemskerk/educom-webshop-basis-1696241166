@@ -1,7 +1,11 @@
 <?php
-include('login.php');
 
-function  showRegisterContent()
+
+function getRegisterData(){
+    
+}
+
+function showRegisterContent()
 {
     $registrationData = validateRegistration();
     if (!$registrationData['valid']) {
@@ -88,7 +92,7 @@ function validateRegistration()
                 $passwordErr = $repeatedPasswordErr = "*Passwords do not match";
             }
         }
-        if (checkIfEmailExists($email)) {
+        if (doesEmailExist($email)) {
             $emailErr = "*This emailadress is already registered";
         }
 
@@ -98,16 +102,10 @@ function validateRegistration()
     return ["name" => $name, "nameErr" => $nameErr, "email" => $email, "emailErr" => $emailErr, "password" => $password, "passwordErr" => $passwordErr, "repeatedPassword" => $repeatedPassword, "repeatedPasswordErr" => $repeatedPasswordErr, "valid" => $valid];
 }
 
-function checkIfEmailExists($email)
-{
-    $usersfile = file_get_contents("users/users.txt");
-    return str_contains($usersfile, $email);
-}
-
 function registerUser($registrationData)
 {
     $usersfile = fopen("<users/users.txt", "a") or die("Unable to open file!");
-    $user = "$registrationData[email]|$registrationData[name]|$registrationData[password]" . PHP_EOL;
+    $user = PHP_EOL . "$registrationData[email]|$registrationData[name]|$registrationData[password]";
     fwrite($usersfile, $user);
     fclose($usersfile);
 }

@@ -1,6 +1,4 @@
 <?php
-include("home.php");
-include('session-manager.php');
 
 function logout(){
     doLogOut();

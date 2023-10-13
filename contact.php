@@ -1,9 +1,7 @@
 
 <?php
 
-include('common-functions.php');
-
-    function  showContactContent(){
+    function showContactContent(){
         $data = validateContact();
         if (!$data['valid']) { 
             showContactForm($data);

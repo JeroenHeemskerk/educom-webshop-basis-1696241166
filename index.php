@@ -1,14 +1,21 @@
 <?php
 include('session-manager.php');
+include('validations.php');
+include('login.php');
+include('logout.php');
+include('home.php');
+include('about.php');
+include('contact.php');
+include('register.php');
+include('common-functions.php');
 session_start();
-
 
 // ===================================
 // MAIN APP
 // ===================================
-$pageTitle = getRequestedPage();
+$page = getRequestedPage();
 // Voer business logic uit en krijg juiste data voor pagina terug
-$pageData = processRequest($pageTitle);
+$pageData = processRequest($page);
 showResponsePage($pageData);
 
 // ===================================
@@ -27,16 +34,39 @@ function getRequestedPage()
     return $requestedPage;
 }
 
-function showResponsePage($page)
+function showResponsePage($pageData)
 {
     beginDocument();
     showHeadSection();
-    showBodySection($page);
+    showBodySection($pageData);
     endDocument();
 };
 
 function processRequest($page)
 {
+    $pageData = [];
+
+    switch ($page) {
+        case 'home':
+            $pageData['page'] = $page;
+            break;
+        case 'about':
+            $pageData['page'] = $page;
+            break;
+        case 'login':
+            $pageData = getLoginData();
+            break;
+        case 'register':
+            validateRegister();
+            break;
+        case 'contact':
+            validateContact();
+            break;
+        default:
+            showPageNotFound();
+    }
+
+    return $pageData;
 };
 
 // =========================================== 
@@ -74,12 +104,12 @@ function showHeadSection()
     </head>';
 }
 
-function showBodySection($page)
+function showBodySection($pageData)
 {
     echo '    <body>' . PHP_EOL;
-    showHeader($page);
+    showHeader($pageData['page']);
     showMenu();
-    showContent($page);
+    showContent($pageData);
     showFooter();
     echo '    </body>' . PHP_EOL;
 }
@@ -89,14 +119,11 @@ function endDocument()
     echo  '</html>';
 }
 
-
-
 //============================================== 
 
-
-function showHeader($page)
+function showHeader($pageTitle)
 {
-    echo '<h1 class="headers">' . $page . ' page</h1>';
+    echo '<h1 class="headers">' . $pageTitle . ' page</h1>';
 }
 
 function showMenu()
@@ -107,7 +134,7 @@ function showMenu()
     showMenuItem('about', 'ABOUT');
     showMenuItem('contact', 'CONTACT');
     if (isUserLoggedIn()) {
-        showMenuItem('logout', 'LOGOUT' . getLoggedInUserName());
+        showMenuItem('logout', 'LOGOUT ' . getLoggedInUserName());
     } else {
         showMenuItem('login', 'LOGIN');
         showMenuItem('register', 'REGISTER');
@@ -121,31 +148,27 @@ function showMenuItem($linkName, $buttonText)
     echo '<li><a href="index.php?page=' . $linkName . '">' . $buttonText . '</a></li>';
 }
 
-function showContent($page)
+function showContent($pageData)
 {
+    $page = $pageData['page'];
+
     switch ($page) {
         case 'home':
-            require('home.php');
             showHomeContent();
             break;
         case 'about':
-            require('about.php');
             showAboutContent();
             break;
         case 'contact':
-            require('contact.php');
             showContactContent();
             break;
         case 'register':
-            require('register.php');
             showRegisterContent();
             break;
         case 'login':
-            require('login.php');
-            showLoginContent();
+            showLoginForm($pageData);
             break;
         case 'logout':
-            require('logout.php');
             logout();
             break;
 
