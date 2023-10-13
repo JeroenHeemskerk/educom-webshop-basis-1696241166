@@ -45,7 +45,7 @@ function validateLoginAttempt($loginData)
     while (!feof($usersfile)) {
         $line = fgets($usersfile);
         // var_dump($line);
-        $parts = explode("|", $line); // Elke losse regel is nu een array met 3 elementen (element 0 = email)
+        $parts = explode("|", $line, 3); // Elke losse regel is nu een array met 3 elementen (element 0 = email)
 
         if ($parts[0] == $loginData['email']) {
             $userFound = true;
