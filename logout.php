@@ -1,8 +1,9 @@
 <?php
 include("home.php");
+include('session-manager.php');
 
 function logout(){
-    session_unset();
+    doLogOut();
     showHomeContent();
 }
 

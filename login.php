@@ -1,10 +1,14 @@
 <?php
 include('common-functions.php');
 include('home.php');
+include('session-manager.php');
 
 
 function  showLoginContent()
 {
+
+    // showlogincontent gaat input krijgen (namelijk de validatie van de login page)
+    // output van de functie validateLoginInput wordt input van showLoginContent?
     $loginData = validateLoginInput();
     if (!$loginData['valid']) {
         showLoginForm($loginData);
@@ -70,13 +74,6 @@ function validateLoginInput()
     return $loginData;
 }
 
-function isLoggedIn()
-{
-    return false;
-    //Voor nu even op false gezet / hier moet nog logica in
-}
-
-
 function validateLoginAttempt($loginData)
 {
     $usersfile = fopen("users/users.txt", "r") or die("Unable to open file!");
@@ -93,7 +90,7 @@ function validateLoginAttempt($loginData)
             // DAN ook checken of de passwords correct zijn ingevoerd (ww = element 2)
             if (trim($parts[2]) == $loginData['password']) {
                 // Ik stop hier de naam in de session
-                $_SESSION["name"] = $parts[1];
+                doLoginUser($parts[1]);
                 // Login (start sessie)
                 // start session staat helemaal aan het begin in de index.php
                 break;

@@ -8,7 +8,6 @@ function  showRegisterContent()
         showRegisterForm($registrationData);
     } else {
         registerUser($registrationData);
-        // showRegisterThanks($registrationData);?
         // Hier moet ik de registratie informatie opslaan in users.txt (bijvoorbeeld registerUser();
         // Daarna navigeren naar de login page
         showLoginForm(["email" => "", "emailErr" => "", "password" => "", "passwordErr" => "", "valid" => false]);

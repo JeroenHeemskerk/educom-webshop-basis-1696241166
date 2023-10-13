@@ -1,11 +1,15 @@
 <?php
+include('session-manager.php');
 session_start();
+
 
 // ===================================
 // MAIN APP
 // ===================================
-$page = getRequestedPage();
-showResponsePage($page);
+$pageTitle = getRequestedPage();
+// Voer business logic uit en krijg juiste data voor pagina terug
+$pageData = processRequest($pageTitle);
+showResponsePage($pageData);
 
 // ===================================
 // FUNCTIONS
@@ -29,6 +33,10 @@ function showResponsePage($page)
     showHeadSection();
     showBodySection($page);
     endDocument();
+};
+
+function processRequest($page)
+{
 };
 
 // =========================================== 
@@ -88,24 +96,29 @@ function endDocument()
 
 function showHeader($page)
 {
-    echo '<h1 class="headers">' . $page . 'page</h1>';
+    echo '<h1 class="headers">' . $page . ' page</h1>';
 }
 
 function showMenu()
 {
     echo '<nav>
-          <ul class="menu">
-              <li><a href="index.php?page=home">HOME</a></li>
-              <li><a href="index.php?page=about">ABOUT</a></li>
-              <li><a href="index.php?page=contact">CONTACT</a></li>';
-    if (isset($_SESSION['name'])) {
-        echo '<li><a href="index.php?page=logout">LOGOUT ' . $_SESSION['name'] . '</a></li>';
+          <ul class="menu">';
+    showMenuItem('home', 'HOME');
+    showMenuItem('about', 'ABOUT');
+    showMenuItem('contact', 'CONTACT');
+    if (isUserLoggedIn()) {
+        showMenuItem('logout', 'LOGOUT' . getLoggedInUserName());
     } else {
-        echo '<li><a href="index.php?page=register">REGISTER</a></li>
-            <li><a href="index.php?page=login">LOGIN</a></li>';
+        showMenuItem('login', 'LOGIN');
+        showMenuItem('register', 'REGISTER');
     }
     echo '</ul>
         </nav>';
+}
+
+function showMenuItem($linkName, $buttonText)
+{
+    echo '<li><a href="index.php?page=' . $linkName . '">' . $buttonText . '</a></li>';
 }
 
 function showContent($page)
@@ -156,4 +169,3 @@ function showPageNotFound()
 {
     echo 'Page not found';
 }
-?>
