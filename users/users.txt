@@ -3,3 +3,7 @@ coach@man-kind.nl|Geert Weggemans|halt!
 ramiwohl@hotmail.com|Rami Wohl|hallo
 laurabokkers@hotmail.com|Laura Bokkers|hoi
 henk@henkspace.nl|henk|welkom123
+henk@hotmail.com|Henk|welkom
+hans@hotmail.com|Hans|hallo
+piet@hotmail.com|Piet|hallo
+harry@hotmail.com|harry|welkom

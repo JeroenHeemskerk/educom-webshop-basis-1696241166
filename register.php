@@ -1,41 +1,40 @@
 <?php
 include('common-functions.php');
 
-
-function  showRegisterContent(){
+function  showRegisterContent()
+{
     $registrationData = validateRegistration();
-    if (!$registrationData['valid']) { 
+    if (!$registrationData['valid']) {
         showRegisterForm($registrationData);
-    } else{
+    } else {
         registerUser($registrationData);
-        // showLoginForm(); deze gebruiken? Dan moet ik de login file importeren
-        
         // showRegisterThanks($registrationData);?
         // Hier moet ik de registratie informatie opslaan in users.txt (bijvoorbeeld registerUser();
         // Daarna navigeren naar de login page
     }
 }
 
-function showRegisterForm($registrationData){
+function showRegisterForm($registrationData)
+{
     echo '
-    <form method="POST" action="index.php?page=login">
+    <form method="POST" action="index.php">
         <label for="name">Name:</label>
-        <input type="text" name="name" id="name" value="'. $registrationData['name'] . '"></br>
+        <input type="text" name="name" id="name" value="' . $registrationData['name'] . '"></br>
         <span class="error">' . $registrationData['nameErr'] . '</span>
         </br></br>
 
         <label for="email">Email:</label>
-        <input type="text" name="email" id="email" value="'. $registrationData['email'] . '"></br>
+        <input type="text" name="email" id="email" value="' . $registrationData['email'] . '"></br>
         <span class="error">' . $registrationData['emailErr'] . '</span>
         </br></br>
 
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" value="'. $registrationData['password'] . '"></br>
+        <input type="password" id="password" name="password" value="' . $registrationData['password'] . '"></br>
         <span class="error">' . $registrationData['passwordErr'] . '</span>
         </br></br>
 
         <label for="repeatedPassword">Repeat password:</label>
-        <input type="password" id="repeatedPassword" name="repeatedPassword" value="'. $registrationData['repeatedPassword'] . '"></br>
+        <input type="password" id="repeatedPassword" name="repeatedPassword" value="' . $registrationData['repeatedPassword'] . '"></br>
         <span class="error">' . $registrationData['repeatedPasswordErr'] . '</span>
         </br></br>
 
@@ -46,7 +45,8 @@ function showRegisterForm($registrationData){
 }
 
 
-function validateRegistration(){
+function validateRegistration()
+{
 
     //initiate variables
     $name = $email = $password = $repeatedPassword = "";
@@ -60,9 +60,9 @@ function validateRegistration(){
         } else {
             $name = test_input($_POST["name"]);
             // check if name only contains letters and whitespace
-             if (!preg_match("/^[a-zA-Z-' ]*$/", $name)) {
+            if (!preg_match("/^[a-zA-Z-' ]*$/", $name)) {
                 $nameErr = "*Only letters and white space allowed";
-                }
+            }
         }
 
         if (empty($_POST["email"])) {
@@ -85,31 +85,33 @@ function validateRegistration(){
             $repeatedPasswordErr = "*Password is required";
         } else {
             $repeatedPassword = test_input($_POST["repeatedPassword"]);
-            if ($password != $repeatedPassword){
+            if ($password != $repeatedPassword) {
                 $passwordErr = $repeatedPasswordErr = "*Passwords do not match";
             }
         }
-        if (checkIfEmailExists($email)){
+        if (checkIfEmailExists($email)) {
             $emailErr = "*This emailadress is already registered";
         }
 
-        $valid = empty($nameErr) && empty($emailErr) && empty($passwordErr) && empty($repeatedPasswordErr); 
+        $valid = empty($nameErr) && empty($emailErr) && empty($passwordErr) && empty($repeatedPasswordErr);
     }
-    
-    return ["name"=>$name, "nameErr"=>$nameErr, "email"=>$email, "emailErr"=>$emailErr, "password"=>$password, "passwordErr"=>$passwordErr, "repeatedPassword"=>$repeatedPassword, "repeatedPasswordErr"=>$repeatedPasswordErr, "valid"=>$valid];
+
+    return ["name" => $name, "nameErr" => $nameErr, "email" => $email, "emailErr" => $emailErr, "password" => $password, "passwordErr" => $passwordErr, "repeatedPassword" => $repeatedPassword, "repeatedPasswordErr" => $repeatedPasswordErr, "valid" => $valid];
 }
 
 
 
-function checkIfEmailExists($email){
+function checkIfEmailExists($email)
+{
     $usersfile = file_get_contents("users/users.txt");
     return str_contains($usersfile, $email);
 }
 
-function registerUser($registrationData){
+function registerUser($registrationData)
+{
 
-$usersfile = fopen("<users/users.txt", "a") or die("Unable to open file!");
-$user = "$registrationData[email]|$registrationData[name]|$registrationData[password]";
-fwrite($usersfile, $user);
-fclose($usersfile);
+    $usersfile = fopen("<users/users.txt", "a") or die("Unable to open file!");
+    $user = "$registrationData[email]|$registrationData[name]|$registrationData[password]" . PHP_EOL;
+    fwrite($usersfile, $user);
+    fclose($usersfile);
 }
