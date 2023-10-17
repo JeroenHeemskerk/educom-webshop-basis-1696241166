@@ -2,12 +2,12 @@
 include('session-manager.php');
 include('validations.php');
 include('login.php');
-include('logout.php');
 include('home.php');
 include('about.php');
 include('contact.php');
 include('register.php');
 include('common-functions.php');
+include('file-repository.php');
 include('user-service.php');
 session_start();
 
@@ -63,10 +63,15 @@ function processRequest($page)
             break;
         case 'register':
             $pageData = getRegisterData();
-             // ["page" => "register", "email" => ""]
+            // ["page" => "register", "email" => ""]
             break;
         case 'contact':
-            validateContact();
+            $pageData = getContactData();
+            // ["page" => "register", "email" => ""]
+            break;
+        case 'logout':
+            doLogOut();
+            $pageData['page'] = 'home';
             break;
         default:
             showPageNotFound();
@@ -166,7 +171,7 @@ function showContent($pageData)
             showAboutContent();
             break;
         case 'contact':
-            showContactContent();
+            showContactContent($pageData);
             break;
         case 'register':
             showRegisterForm($pageData);
@@ -174,10 +179,6 @@ function showContent($pageData)
         case 'login':
             showLoginForm($pageData);
             break;
-        case 'logout':
-            logout();
-            break;
-
         default:
             showPageNotFound();
     }

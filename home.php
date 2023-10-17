@@ -1,7 +1,6 @@
 <?php
 
-   function showHomeContent(){
+function showHomeContent()
+{
     echo '<p>Welkom op deze website!</p>';
-    }
-
-?>
+}

@@ -1,5 +1,10 @@
 <?php
 
+define('RESULT_USER_FOUND', 1);
+define('RESULT_OK', 0);
+define('RESULT_UNKNOWN_USER', -1);
+define('RESULT_WRONG_PASSWORD', -2);
+
 function getInitialLoginFormData()
 {
     return  ["page" => "login", "email" => "", "emailErr" => "", "password" => "", "passwordErr" => "", "valid" => false];
@@ -38,34 +43,27 @@ function showLoginForm($loginData)
 
 function validateLoginAttempt($loginData)
 {
-    $usersfile = fopen("users/users.txt", "r") or die("Unable to open file!");
-    fgets($usersfile); // Ik pak hier de eerste 'line' en sla hem niet op, zodat hij hierna bij line 2 begint. 
-    $userFound = false;
-    // Hieronder staat: Zolang je niet aan het einde van het document bent, lees en output steeds 1 line.
-    while (!feof($usersfile)) {
-        $line = fgets($usersfile);
-        // var_dump($line);
-        $parts = explode("|", $line, 3); // Elke losse regel is nu een array met 3 elementen (element 0 = email)
+    $email = $loginData['email'];
+    $password = $loginData['password'];
 
-        if ($parts[0] == $loginData['email']) {
-            $userFound = true;
-            // DAN ook checken of de passwords correct zijn ingevoerd (ww = element 2)
-            if (trim($parts[2]) == $loginData['password']) {
-                // Ik stop hier de naam in de session
-                doLoginUser($parts[1]);
-                // Login (start sessie)
-                // start session staat helemaal aan het begin in de index.php
-                break;
-            } else {
-                $loginData['passwordErr'] = "Wrong password";
-                $loginData['valid'] = false;
-            }
-        }
+    $result = findUserByEmail($email);
+    $message = $result['message'];
+    $user = $result['user'];
+
+    if ($message != RESULT_USER_FOUND) {
+        $loginData['emailErr'] = "This email-adress is not registered";
+        $loginData['valid'] = false;
+        return $loginData;
     }
-    fclose($usersfile);
 
-    if (!$userFound) {
-        $loginData['emailErr'] = "Email address is not registered.";
+    $result = authenticateUser($user, $password);
+
+    if ($result == RESULT_OK) {
+        $name = $user[1];
+        doLoginUser($name);
+        $loginData['page'] = 'home';
+    } else {
+        $loginData['passwordErr'] = "Incorrect password";
         $loginData['valid'] = false;
     }
 

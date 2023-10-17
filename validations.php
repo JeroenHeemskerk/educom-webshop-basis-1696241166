@@ -2,6 +2,14 @@
 
 // Hier komen alle validaties
 
+function test_input($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
 function validateLogin($loginData)
 {
     if (empty($_POST["email"])) {
@@ -33,15 +41,12 @@ function validateLogin($loginData)
     return $loginData;
 }
 
-
-
-
 function validateRegister($registerData)
 {
     if (empty($_POST["name"])) {
         $registerData['nameErr'] = "*Name is required";
     } else {
-        $registerData['name']= test_input($_POST["name"]);
+        $registerData['name'] = test_input($_POST["name"]);
         // check if name only contains letters and whitespace
         if (!preg_match("/^[a-zA-Z-' ]*$/", $registerData['name'])) {
             $registerData['nameErr'] = "*Only letters and white space allowed";
@@ -80,8 +85,58 @@ function validateRegister($registerData)
     return $registerData;
 }
 
+function validateContact($contactData)
+{
+    // validate for the 'POST' data
+    if (empty($_POST['salutation'])) {
+        $contactData['salutationErr'] = "*Salutation is required";
+    } else {
+        $contactData['salutation'] = test_input($_POST["salutation"]);
+    }
 
+    if (empty($_POST["name"])) {
+        $contactData['nameErr'] = "*Name is required";
+    } else {
+        $contactData['name'] = test_input($_POST["name"]);
+        // check if name only contains letters and whitespace
+        if (!preg_match("/^[a-zA-Z-' ]*$/", $contactData['name'])) {
+            $contactData['nameErr'] = "*Only letters and white space allowed";
+        }
+    }
 
-// function validateContact(){
+    if (empty($_POST["email"])) {
+        $contactData['emailErr'] = "*Email is required";
+    } else {
+        $contactData['email'] = test_input($_POST["email"]);
+        // check if e-mail address is well-formed
+        if (!filter_var($contactData['email'], FILTER_VALIDATE_EMAIL)) {
+            $contactData['emailErr'] = "*Invalid email format";
+        }
+    }
 
-// }
+    if (empty($_POST["phonenumber"])) {
+        $contactData['phonenumberErr'] = "*Phonenumber is required";
+    } else {
+        $contactData['phonenumber'] = test_input($_POST["phonenumber"]);
+    }
+
+    if (empty($_POST["comm_preference"])) {
+        $contactData['comm_preferenceErr'] = "*Communication preference is required";
+    } else {
+        $contactData['comm_preference'] = test_input($_POST["comm_preference"]);
+    }
+
+    if (empty($_POST["message"])) {
+        $contactData['messageErr'] = "*Message is required";
+    } else {
+        $contactData['message'] = test_input($_POST["message"]);
+    }
+
+    if (empty($contactData['salutationErr']) && empty($contactData['nameErr']) && empty($contactData['emailErr']) && empty($contactData['phonenumberErr']) && empty($contactData['comm_preferenceErr']) && empty($contactData['messageErr'])) {
+        $contactData['valid'] = true;
+    } else {
+        $contactData['valid'] = false;
+    }
+
+    return $contactData;
+}

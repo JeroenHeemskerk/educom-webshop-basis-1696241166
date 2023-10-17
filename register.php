@@ -1,6 +1,5 @@
 <?php
 
-
 function getRegisterData()
 {
     //initiate variables
@@ -10,13 +9,17 @@ function getRegisterData()
         $registerData = validateRegister($registerData);
 
         if ($registerData['valid']) {
-            registerUser($registerData);
+
+            $email = $registerData['email'];
+            $name = $registerData['name'];
+            $password = $registerData['password'];
+
+            saveUser($email, $name, $password);
             $registerData = getInitialLoginFormData();
         }
     }
     return $registerData;
 }
-
 
 function showRegisterForm($registrationData)
 {
@@ -46,14 +49,4 @@ function showRegisterForm($registrationData)
 
         <button type= "submit">Submit</button>
     </form>';
-}
-
-
-
-function registerUser($registrationData)
-{
-    $usersfile = fopen("<users/users.txt", "a") or die("Unable to open file!");
-    $user = PHP_EOL . "$registrationData[email]|$registrationData[name]|$registrationData[password]";
-    fwrite($usersfile, $user);
-    fclose($usersfile);
 }
